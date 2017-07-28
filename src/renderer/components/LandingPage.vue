@@ -1,163 +1,170 @@
 <template xmlns:v-on="">
-
-    <div class="container" :style="containerStyle">
-        <split-panel ref="splitPanel" orientation="vertical" :show-border="true" :init-position="180">
-            <split-panel lass="user-schemas__panel" orientation="horizontal" :show-border="true" :init-position="400" slot="panel1">
-                <div class="panel" slot="panel1">
-                    <entry></entry>
+    <div>
+        <div class="container" :style="containerStyle" id="container">
+            <split-panel ref="splitPanel" Orientation="vertical" :show-border="true" :init-position="100">
+                <div slot="panel1">
+                    <left-pane></left-pane>
                 </div>
-                <div class="user-schemas__panel" slot="panel2">
-                    <div class="user-schemas__container">
-                        <div class="user-schemas__toolbox-container">
-                            <drag></drag>
-                        </div>
-                        <div class="user-schemas__buttons-container">
-                            <button class="md-dense user-schemas__button">Save Schema</button>
-                            <button class="md-dense user-schemas__button">Load Schema</button>
-                            <button class="md-dense user-schemas__button">Delete Schema</button>
-                            <button class="md-dense user-schemas__button">Import Schema</button>
-                        </div>
-                    </div>
-                </div>
-            </split-panel>
-            <split-panel orientation="vertical" :show-border="true" :init-position="380" slot="panel2">
-                <div class="panel" slot="panel1">
-                    <entry></entry>
-                </div>
-                <split-panel orientation="vertical" :show-border="true" :init-position="440" slot="panel2">
-                    <div class="panel" slot="panel1">
+                <split-panel ref="splitPanel" Orientation="horizontal" :show-border="true" :init-position="180" slot="panel2">
+                    <div slot="panel1">
                         <entry></entry>
                     </div>
-                    <div class="json-schema-content__panel" slot="panel2">
-                        <div class="json-schema-content__container">
-                            <div class="json-schema-content__textarea-container">
-                                <div id="wrapper">
-                                    <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
-                                    <main>
-                                        <div class="left-side">
-                                            <span class="title">
-                                                <drag></drag>
-                                            </span>
-                                            <system-information></system-information>
-                                        </div>
+                    <split-panel Orientation="horizontal" :show-border="true" :init-position="440" slot="panel2">
+                        <div class="panel" slot="panel1">
+                            <entry></entry>
+                        </div>
+                        <div slot="panel2">
+                            <div >
+                                <div >
+                                    <div >
+                                        <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
+                                        <main id="flex-split">
+                                            <div class="left-side">
+                                                <entry></entry>
+                                                <system-information></system-information>
+                                            </div>
 
-                                        <div class="right-side">
-                                            <div class="doc">
-                                                <div class="title">Getting Started</div>
-                                                <p>
-                                                    electron-vue comes packed with detailed documentation that covers everything from
-                                                    internal configurations, using the project structure, building your application,
-                                                    and so much more. more more more
-                                                </p>
-                                                <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
+                                            <div>
+                                                <div class="doc">
+                                                    <div class="title">Getting Started</div>
+                                                    <p>
+                                                        electron-vue comes packed with detailed documentation that covers everything from
+                                                        internal configurations, using the project structure, building your application,
+                                                        and so much more. more more more
+                                                    </p>
+                                                    <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
+                                                </div>
+                                                <div class="doc">
+                                                    <div class="title alt">Other Documentation</div>
+                                                    <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
+                                                    <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+                                                </div>
                                             </div>
-                                            <div class="doc">
-                                                <div class="title alt">Other Documentation</div>
-                                                <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-                                                <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+                                        </main>
+
+                                        <div class="json-schema-content__buttons-container">
+                                            <div class="json-schema-content__button-bar">
+                                                <button class="md-dense json-schema-content__button">New Schema</button>
+                                                <button class="md-dense json-schema-content__button">Undo</button>
+                                                <button class="md-dense json-schema-content__button">Redo</button>
+                                            </div>
+                                            <div class="json-schema-content__button-bar">
+                                                <button class="md-dense json-schema-content__button">Copy to Clipboard</button>
+                                                <button class="md-dense json-schema-content__button">Download to File</button>
+                                                <a ref="downloadLink" style="display: none;"></a>
+                                                <button class="md-dense json-schema-content__button">Load from File</button>
                                             </div>
                                         </div>
-                                    </main>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="json-schema-content__buttons-container">
-                                <div class="json-schema-content__button-bar">
-                                    <button class="md-dense json-schema-content__button">New Schema</button>
-                                    <button class="md-dense json-schema-content__button">Undo</button>
-                                    <button class="md-dense json-schema-content__button">Redo</button>
-                                </div>
-                                <div class="json-schema-content__button-bar">
-                                    <button class="md-dense json-schema-content__button">Copy to Clipboard</button>
-                                    <button class="md-dense json-schema-content__button">Download to File</button>
-                                    <a ref="downloadLink" style="display: none;"></a>
-                                    <button class="md-dense json-schema-content__button">Load from File</button>
-                                </div>
+
                             </div>
                         </div>
-                    </div>
+                    </split-panel>
                 </split-panel>
-            </split-panel>
-        </split-panel>
 
+
+            </split-panel>
+
+        </div>
     </div>
+
 
 
 </template>
 
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
-  import Entry from './Entry'
-  import Drag from './drag.vue'
-  import SplitPanel from './Drag/SplitPanel.vue'
+  import SystemInformation from './landingPage/SystemInformation';
+  import Entry from './Entry';
+  import SplitPanel from './Drag/SplitPanel.vue';
+  import leftPane from './leftPane/leftPane.vue';
+
+  const electron = require('electron');
+  let screenElectron = electron.screen;
+  let mainScreen = screenElectron.getPrimaryDisplay();
+  let allScreens = screenElectron.getAllDisplays();
+  let mainScreenDimensions = mainScreen.size;
 
   export default {
     name: 'landing-page',
     created () {
-      this.setContainerHeight()
+      this.setContainerHeight();
+      this.setContainerWidth();
       // register window resize event handler
       window.addEventListener('resize', () => {
         // only process resize event each 0.066 sec (about 15 fts)
         if (!this.timeout) {
           this.timeout = window.setTimeout(() => {
-            this.timeout = null
-            this.setContainerHeight()
-          }, 66)
+            this.timeout = null;
+            this.setContainerHeight();
+            this.setContainerWidth();
+          }, 100);
         }
-      })
+      });
       // setup after 1 sec
-      window.setTimeout(this.setup, 1000)
+      window.setTimeout(this.setup, 1000);
     },
     mounted () {
       // adjust split panel size
-      this.$refs.splitPanel.sizeChanged(this)
+      this.$refs.splitPanel.sizeChanged(this);
+
     },
     data () {
       return {
-        signIn: true,
-        repository: null,
-        containerHeight: 50,
-        userSchemaSelected: false,
-        // data for dialogs
-        // data for undo/redo
-        treeDataBackups: [],
-        currentVersionNo: 0,
-        // data for upload files
-        uploadFilename: null,
-        multipleUpload: false,
-        uploadFiles: null
-      }
+        containerHeight: 10,
+        containerWidth: 50
+      };
     },
     computed: {
       containerStyle () {
-        return { 'height': `${this.containerHeight}%` }
+        return {
+          'height': `${this.containerHeight}%`,
+          'width': `${this.containerWidth}%`
+        };
       }
     },
     methods: {
       open (link) {
-        this.$electron.shell.openExternal(link)
+        this.$electron.shell.openExternal(link);
       },
       setContainerHeight () {
-        this.containerHeight = window.innerHeight - 2
+        this.containerHeight = window.containerHeight - 50;
+
+      },
+      setContainerWidth () {
+        this.containerWidth = window.containerWidth -20;
       },
       // method for drag over in tree
       dragOverRule (dest, source) {
-        if (typeof dest.funcs.accept === 'function') return dest.funcs.accept(dest, source)
+        if (typeof dest.funcs.accept === 'function') return dest.funcs.accept(dest, source);
       }
     },
-    components: { SystemInformation, Entry, Drag, SplitPanel }
-  }
+    components: { SystemInformation, Entry, leftPane, SplitPanel }
+  };
 </script>
 
 <style scoped="">
     @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: -1px;
-    }
 
-    body { font-family: 'Source Sans Pro', sans-serif; }
+
+    .container {
+        /*height: 600px;*/
+        border: solid 6px black;
+        font-size: 12px;
+        height: 100%;
+        width: 100%;
+
+        margin-left: -1px;
+        margin-right: -1px;
+        margin-top: -1px;
+        margin-bottom: -1px;
+
+        padding-left: 1px;
+        padding-right: 1px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
 
     #wrapper {
         background:
@@ -166,10 +173,11 @@
                         rgba(255, 255, 255, 1) 40%,
                         rgba(229, 229, 229, .9) 100%
                 );
-        height: 95%;
-        padding: 10px 20px;
-        width: 100%;
-        padding-bottom: -1%;
+        padding-right: 10px;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-right: 10px;
     }
 
     #logo {
@@ -185,16 +193,13 @@
 
     main > div { flex-basis: 50%; }
 
+    canvas > div { flex-basis: 50%; }
+
     .left-side {
         display: flex;
         flex-direction: column;
     }
 
-    .welcome {
-        color: #555;
-        font-size: 23px;
-        margin-bottom: 10px;
-    }
 
     .title {
         color: #2c3e50;
@@ -232,12 +237,7 @@
         background-color: transparent;
     }
 
-    .container {
-        /*height: 600px;*/
-        border: solid 1px black;
-        font-size: 12px;
-        height: 90%;
-    }
+
 
     .panel {
         padding: 10px;

@@ -18,7 +18,7 @@
 <script>
   export default {
     created () {
-      this.$root.$on('splitter-size-changed', this.sizeChanged)
+      this.$root.$on('splitter-size-changed', this.sizeChanged);
       /*
       // register window resize event handler
       window.addEventListener('resize', () => {
@@ -33,8 +33,8 @@
       */
     },
     mounted () {
-      this.panel1 = this.$el.children[0]
-      this.panel2 = this.$el.children[1]
+      this.panel1 = this.$el.children[0];
+      this.panel2 = this.$el.children[1];
     },
     data () {
       return {
@@ -48,44 +48,44 @@
         startPos: 0,
         diff: 0,
         timeout: null
-      }
+      };
     },
     computed: {
       containerStyle () {
-        var style = {}
-        if (this.Width) style.width = this.Width + 'px'
-        if (this.Height) style.height = this.Height + 'px'
-        if (this.ShowBorder) style.border = '1px solid grey'
-        if (this.Orientation === 'horizontal') style['flex-direction'] = 'column'
-        return style
+        let style = {};
+        if (this.Width) style.width = this.Width + 'px';
+        if (this.Height) style.height = this.Height + 'px';
+        if (this.ShowBorder) style.border = '1px solid grey';
+        if (this.Orientation === 'horizontal') style['flex-direction'] = 'column';
+        return style;
       },
       panel1Style () {
-        var style = {}
-        var border = this.ShowBorder ? 1 : 0
+        var style = {};
+        var border = this.ShowBorder ? 1 : 0;
         if (this.Orientation === 'vertical') {
-          style.width = (this.SplitPosition > 0 && this.containerWidth > 0) ? (this.SplitPosition - border) + 'px' : '50%'
-          style.height = '100%'
+          style.width = (this.SplitPosition > 0 && this.containerWidth > 0) ? (this.SplitPosition - border) + 'px' : '50%';
+          style.height = '100%';
         } else {
-          style.width = '100%'
-          style.height = (this.SplitPosition > 0 && this.containerHeight > 0) ? (this.SplitPosition - border) + 'px' : '50%'
+          style.width = '100%';
+          style.height = (this.SplitPosition > 0 && this.containerHeight > 0) ? (this.SplitPosition - border) + 'px' : '50%';
         }
-        return style
+        return style;
       },
       panel2Style () {
-        var style = { 'flex': 1 }
+        var style = { 'flex': 1 };
         if (this.Orientation === 'vertical') {
-          style.height = '100%'
+          style.height = '100%';
         } else {
-          style.width = '100%'
+          style.width = '100%';
         }
-        return style
+        return style;
       },
       handleStyle () {
-        var pos
+        var pos;
         if (this.isResizing) {
-          pos = this.handlePosition
+          pos = this.handlePosition;
         } else {
-          pos = this.SplitPosition
+          pos = this.SplitPosition;
         }
         if (this.Orientation === 'vertical') {
           return {
@@ -95,7 +95,7 @@
             left: pos + 'px',
             'border-left': '1px solid grey',
             cursor: 'col-resize'
-          }
+          };
         } else {
           return {
             width: '100%',
@@ -104,7 +104,7 @@
             top: pos + 'px',
             'border-top': '1px solid grey',
             cursor: 'row-resize'
-          }
+          };
         }
       }
     },
@@ -127,86 +127,86 @@
         if (this.Orientation === 'vertical') {
           if (this.containerWidth) {
             if (this.SplitPosition) {
-              if (this.SplitPosition > this.containerWidth - 10) this.SplitPosition = this.containerWidth - 10
+              if (this.SplitPosition > this.containerWidth - 10) this.SplitPosition = this.containerWidth - 10;
             } else {
-              this.SplitPosition = this.containerWidth / 2
+              this.SplitPosition = this.containerWidth / 2;
             }
           }
         } else {
           if (this.containerHeight) {
             if (this.SplitPosition) {
-              if (this.SplitPosition > this.containerHeight - 10) this.SplitPosition = this.containerHeight - 10
+              if (this.SplitPosition > this.containerHeight - 10) this.SplitPosition = this.containerHeight - 10;
             } else {
-              this.SplitPosition = this.containerHeight / 2
+              this.SplitPosition = this.containerHeight / 2;
             }
           }
         }
       },
       setSize () {
         // setup init size and pos
-        this.containerWidth = this.$el.offsetWidth
-        this.containerHeight = this.$el.offsetHeight
-        this.validateSettings()
-        this.handlePosition = this.SplitPosition
+        this.containerWidth = this.$el.offsetWidth;
+        this.containerHeight = this.$el.offsetHeight;
+        this.validateSettings();
+        this.handlePosition = this.SplitPosition;
         // console.log(`w: ${this.containerWidth}, h: ${this.containerHeight}, s: ${this.SplitPosition}`)
       },
       isParent (component) {
-        if (component === this.$root) return true
-        let parent = this.$parent
+        if (component === this.$root) return true;
+        let parent = this.$parent;
         while (parent !== this.$root) {
-          if (parent === component) return true
-          parent = parent.$parent
+          if (parent === component) return true;
+          parent = parent.$parent;
         }
-        return false
+        return false;
       },
       sizeChanged (source) {
         // if parent's size changed then set size
         if (this.isParent(source)) {
-          this.setSize()
+          this.setSize();
           this.$nextTick(() => {
             // notify children to set size
-            this.$root.$emit('splitter-size-changed', this)
-          })
+            this.$root.$emit('splitter-size-changed', this);
+          });
         }
       },
       startResize (e) {
-        this.isResizing = true
+        this.isResizing = true;
         if (this.Orientation === 'vertical') {
-          this.startPos = e.clientX
+          this.startPos = e.clientX;
         } else {
-          this.startPos = e.clientY
+          this.startPos = e.clientY;
         }
-        this.diff = 0
+        this.diff = 0;
       },
       resizing (e) {
-        var newPos
-        if (!this.isResizing) return
+        var newPos;
+        if (!this.isResizing) return;
         if (this.Orientation === 'vertical') {
-          newPos = this.SplitPosition + (e.clientX - this.startPos)
+          newPos = this.SplitPosition + (e.clientX - this.startPos);
           if (newPos > 10 && newPos < this.containerWidth - 10) {
-            this.diff = e.clientX - this.startPos
-            this.handlePosition = this.SplitPosition + this.diff
+            this.diff = e.clientX - this.startPos;
+            this.handlePosition = this.SplitPosition + this.diff;
           }
         } else {
-          newPos = this.SplitPosition + (e.clientY - this.startPos)
+          newPos = this.SplitPosition + (e.clientY - this.startPos);
           if (newPos > 10 && newPos < this.containerHeight - 10) {
-            this.diff = e.clientY - this.startPos
-            this.handlePosition = this.SplitPosition + this.diff
+            this.diff = e.clientY - this.startPos;
+            this.handlePosition = this.SplitPosition + this.diff;
           }
         }
       },
       stopResize () {
-        if (!this.isResizing) return
-        this.SplitPosition += this.diff
-        this.handlePosition = this.SplitPosition
-        this.isResizing = false
+        if (!this.isResizing) return;
+        this.SplitPosition += this.diff;
+        this.handlePosition = this.SplitPosition;
+        this.isResizing = false;
         this.$nextTick(() => {
           // notify children to set size
-          this.$root.$emit('splitter-size-changed', this)
-        })
+          this.$root.$emit('splitter-size-changed', this);
+        });
       }
     }
-  }
+  };
 </script>
 <style scoped>
   .split-panel {
@@ -230,7 +230,7 @@
   .split-panel--unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
+
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
