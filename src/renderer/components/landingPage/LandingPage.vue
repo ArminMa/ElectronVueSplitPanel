@@ -3,11 +3,21 @@
         <div class="container" :style="containerStyle" id="container">
             <split-panel ref="splitPanel" Orientation="vertical" :show-border="true" :init-position="100">
                 <div slot="panel1">
+                    <button @click="swapComponent(null)">Close</button>
+                    <button @click="changeView('clock')">clock</button>
                     <left-pane></left-pane>
+
                 </div>
                 <split-panel ref="splitPanel" Orientation="horizontal" :show-border="true" :init-position="180" slot="panel2">
                     <div slot="panel1">
-                        <entry></entry>
+                        <div id="toReplace">
+                            <div :is="currentComponent"></div>
+                            <div v-show="!currentComponent" v-for="component in componentsArray">
+                                <button @click="swapComponent(component)">{{component}}</button>
+                            </div>
+                        </div>
+
+
                     </div>
                     <split-panel Orientation="horizontal" :show-border="true" :init-position="440" slot="panel2">
                         <div class="panel" slot="panel1">
@@ -74,10 +84,12 @@
 </template>
 
 <script>
-  import SystemInformation from './landingPage/SystemInformation';
-  import Entry from './Entry';
-  import SplitPanel from './Drag/SplitPanel.vue';
-  import leftPane from './leftPane/leftPane.vue';
+  import {actions, state} from '../../store/modules/leftPaneRoutView';
+  import SystemInformation from '../SystemInformation';
+  import Clock from '../Clock.vue';
+  import Entry from '../Entry';
+  import SplitPanel from '../Drag/SplitPanel.vue';
+  import leftPane from '../leftSideBar/leftPane.vue';
 
   const electron = require('electron');
   let screenElectron = electron.screen;
@@ -87,6 +99,11 @@
 
   export default {
     name: 'landing-page',
+    el: 'body',
+    vuex: {
+      actions
+      },
+
     created () {
       this.setContainerHeight();
       this.setContainerWidth();
@@ -111,6 +128,8 @@
     },
     data () {
       return {
+        currentComponent: SystemInformation,
+        componentsArray: ['foo', 'bar'],
         containerHeight: 10,
         containerWidth: 50
       };
@@ -137,9 +156,32 @@
       // method for drag over in tree
       dragOverRule (dest, source) {
         if (typeof dest.funcs.accept === 'function') return dest.funcs.accept(dest, source);
+      },
+      swapComponent: function(component)
+      {
+        if (component==='foo'){
+          this.currentComponent = Entry;
+        }
+        else if (component==='bar') {
+          this.currentComponent = Clock;
+        }
+        else if (component==='clock') {
+          this.currentComponent = Clock;
+        }
+        else {
+            this.currentComponent = component;
+        }
       }
+
     },
-    components: { SystemInformation, Entry, leftPane, SplitPanel }
+
+    components: {
+      SystemInformation,
+      Entry,
+      Clock,
+      leftPane,
+      SplitPanel
+    }
   };
 </script>
 

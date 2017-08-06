@@ -190,6 +190,7 @@ module.exports = {
     "max-params": 0,
     "max-statements": 0,
     "no-bitwise": 0,
-    "no-plusplus": 0
+    "no-plusplus": 0,
+    "func-call-spacing": 0
   }
 }
